@@ -29,19 +29,19 @@
  */
 
 
- /**
-  * Asynchronously returns a greeting for a specified name.
-  * @param name The name of the person to greet.
-  */
- function greet(name) {
+/**
+ * Asynchronously returns a greeting for a specified name.
+ * @param name The name of the person to greet.
+ */
+function greet(name) {
     return new Promise(function(resolve, reject) {
-      setTimeout(function() {
-        if (typeof name === 'string') { 
-          resolve('Hello there, ' + name);
-        } else {
-          reject('Name must be a string!');
-        }
-      }, 500);
+        setTimeout(function() {
+            if (typeof name === 'string') {
+                resolve('Hello there, ' + name);
+            } else {
+                reject('Name must be a string!');
+            }
+        }, 500);
     });
 }
 
@@ -52,12 +52,24 @@
 function uppercaser(str) {
     return new Promise(function(resolve, reject) {
         setTimeout(function() {
-        if (typeof str === 'string') {
-            resolve(str.toUpperCase());
-        } else {
-            reject('Argument to uppercaser must be string');
-        }
+            if (typeof str === 'string') {
+                resolve(str.toUpperCase());
+            } else {
+                reject('Argument to uppercaser must be string');
+            }
         }, 500);
+    });
+}
+
+function spacer(str) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(() => {
+            if (typeof str === 'string') {
+                resolve(str.split("").join(" "));
+            } else {
+                reject('Name must be a string!');
+            }
+        }, 1000);
     });
 }
 
@@ -67,14 +79,39 @@ async function greetAndUppercase(name) {
     return uppercasedGreeting
 }
 
+async function mix(name) {
+    greeting = await greet(name)
+    uppercasedGreeting = await uppercaser(greeting)
+    spacedGreeting = await spacer(uppercasedGreeting)
+    return spacedGreeting
+}
 /* Uncomment me! #1 */
-// result = greetAndUppercase('Ducky')
-// console.log(result)
+result = mix('sam')
+result
+    .then((result) => {
+        console.log(result)
+    })
+    .catch(function(err) {
+        console.log(err)
+    })
+
+
+
+
+
+
+
+
+
 
 /* Uncomment me! #2 */
 // greetAndUppercase('Ducky')
 //     .then(function(result) {
 //         console.log(result)
+//         return spacer(name)
+//     })
+//     .then((spaced) => {
+//         console.log(spaced)
 //     })
 //     .catch(function(err) {
 //         console.log(err)
